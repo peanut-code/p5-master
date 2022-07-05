@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Tic Tac Toe</a></li>
+        <li><a href="doku.html">Dokumentation</a></li>
+        <li><a href="tree.html">Minimax</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h2>Erklärung des Minimax Algorithmus</h2>
+  <h3 class="doku">Grundidee</h3>
+  <p>
+    Der Algorithmus findet Anwendung in der Spieltheorie und
+    Entscheidungsfindung. Der Name "Minimax" verrät schon die wichtigste
+    Grundidee welche hinter dem Algorithmus steckt. Zwei Spieler, beide wollen
+    gewinnen und versuchen ein optimales Spiel zu spielen. Der Algorithmus ist
+    der sogenannte Maximierer, er sucht immer nach einer positiven
+    Ergebnisbewertung. Dabei ist der 2. Spieler aus Sicht der AI, der
+    Minimierer, da dieser versucht selbst zu gewinnen und mögliche
+    Gewinnchancen zu verbauen. Der Mensch will also aus Sicht der AI immer ein
+    möglichst negatives Ergebnis erzielen. Der Minimax-Algorithmus wird
+    im Allgemeinen verwendet, um den nächsten Spielzug zu bestimmen. Zwei Spieler wechseln sich ab, wobei die
+    Gewinnchancen des Gegners, der als Minimierungsspieler bezeichnet wird, minimiert werden. Dadurch maximiert
+    er die eigenen Gewinnchancen als Maximierungsspieler. Ausgangssituation:
+    Der Mensch hat gerade seinen Zug gemacht. Dummerweise ist ihm entgangen,
+    dass er soeben hätte gewinnen können!
+  </p>
+  <img src="screenshots/decisionTree.png" alt="Entscheidungsbaum" />
+  <h3 class="doku">Vorgehensweise</h3>
+  <p>
+    Der Algorithmus betrachtet alle möglichen Bewegungen/Spielverläufe
+    rekursiv (rückverfolgend) und geht diese alle bis zum Ende durch. Außerdem weißt er jedem
+    Spielzug eine entsprechende Punktzahl zu. Dies geschieht immer unter der
+    Annahme, dass auch der Mensch den für ihn besten Spielzug wählt. Dabei
+    wird ein positiver Ausgang des Spiels für die AI mit +1 bewert, ein
+    negatives Ende (Mensch gewinnt) mit -1 und ein Unentschieden mit 0. In
+    unserem Beispiel hat der Algorithmus nun zwei positiv bewertete Spielausgänge
+    gefunden. Beide haben eine Bewertung von +1 erhalten. Der Minimax aber,
+    ist ein sogenannter "Backtracking Algorithmus". Er findet die optimale
+    Spielstrategie, indem er alle möglichen Spielausgänge bis zu seiner Ausgangssituation zurückverfolgt. Der
+    Algorithmus möchte das
+    Spiel immer möglichst schnell gewinnen, daher entscheidet er sich
+    natürlich für den sofortigen Sieg. Angenommen die rechte Option wäre nicht
+    verfügbar, so würde der Algorithmus schon genau wissen, wie er innerhalb
+    der nächsten zwei Spielzüge gewinnen könnte. Er würde sein X in das
+    mittlere Feld der unteren Reihe setzen, denn würde er sein X links
+    hinsetzten, so könnte der Mensch anschließend sofort gewinnen.
+  </p>
+  <h3 class="doku">Ändern der function mousePressed()</h3>
+  <p>
+    Mit der bisherigen Implementierung, macht der Mensch seinen Spielzug und
+    wenn die AI an der Reihe ist, sucht sie sich einen zufällig gewählten
+    freien Platz auf dem Spielfeld aus: "let move random(available); ..." Wir
+    wollen nun erreichen, dass die AI an dieser Stelle den bestmöglichen
+    Spielzug sucht und tätigt. Dazu schreiben wir eine neue Funktion: "function
+    bestMove()"!
+  </p>
+  <h3 class="doku">function bestMove()</h3>
+  <p>
+    Zunächst legen wir zwei Variablen an. "besterScore", welche wir gleich mit
+    "-Infinity" (minus Unendlich) iinitialisieren und eine Variable
+    "spielzug", in welcher die Positionskoordinaten für den Spielzug
+    gespeichert werden. Mithilfe einer for-Schleife iterieren wir über das
+    Spilefeld und suchen nach freien Plätzen. Dann geben wir unserer "function bestMove()" noch eine if-Bedingung: sollte
+    noch ein Spielzug möglich sein, da
+    ein leeres Feld gefunden wurde und der computer an der Reihe ist, dann
+    rufe die minimax Funtion auf. Sollte der "score" nun größer sein als
+    "besterScore", dann schreibe den neuen größeren Wert in "besterScore" und
+    die Koordinaten (die jeweiligen Indizis vom Iterieren) in "spielzug".
+    Solange noch weitere Spielzüge möglich sind, macht die AI einen Zug und
+    setzt anschließend wieder den aktuellen Spieler auf "person", damit der
+    Mensch seinen Spielzug machen kann.
+    <img src="screenshots/functionBestMove().PNG" alt="bestMove()" />
+  </p>
+
+  <h3 class="doku">function minimax()</h3>
+  <p>
+    Die Funktion benötigt drei Parameter, welche hier übergeben werden:
+    "function minimax(spielfeld, tiefe, isMaximizing)". Der Parameter
+    "spielfeld" dient zur Information über die Position auf dem Spielfeld. Die
+    "tiefe" ist für eine Angabe, wie viele Spielzüge die AI im Vorraus
+    simulieren soll. Außerdem noch einen Boolean "isMaximizing" welcher
+    true/false entgegen nehmen kann. Zuerst prüfen wir, ob es einen Gewinner
+    gibt oder ob das Spiel in der aktuellen Position vorbei ist. Dafür rufen wir
+    die "function werGewinnt()" auf und geben im Falle, dass das Spiel vorbei
+    ist, die Bewertung der aktuellen Position zurück. Als nächstes definieren
+    wir was zu tun ist, wenn die AI an der Reihe ist. Dafür wollen wir
+    "besterScore" finden, der die beste Bewertung eines folgenden Spielzuges, welche
+    wir für unsere aktuelle Position auf dem Spielfeld erhalten können, beinhaltet. Dafür
+    legen wir eine Variable "besterScore" an und initialisieren sie mit dem
+    Wert "-Infinity" (minus Unendlich). Mit einer for-Schleife iterieren wir
+    nun über die einzelnen Felder, welche für den aktuellen Spielzug noch frei
+    sind. Wir speichern die Bewertung im "score" und setzen den Boolean auf
+    false, da nun theoretisch der Zug des anderen Spielers folgen würde.
+    Anschließend setzen wir noch den "besterScore" mit Hilfe der "function max()"
+    auf je nachdem, den Wert, welcher in der aktuellen Auswertung größer ist.
+    (Die "function max()" erwartet als Parameter die beiden zu vergleichenden
+    Parameter). Sobald wir die beste Bewertung (also unseren am besten
+    bewertetetn Spielzug) gefunden haben, geben wir den "besterScore" mit einem
+    return Statement zurück. Nahezu dasselbe machen wir jetzt noch einmal für
+    den Minimizing Spieler (also der Mensch und somit Gegner der AI). Wir
+    initialisieren den "besterScore" aber diesmal mit positive "Infinity"
+    (plus Unendlich) und rufen für jedes mögliche Spielfeld unsere "function minimax()" auf, in welcher wir wieder die
+    Position, die Tiefe mit -1 und
+    diesmal den Boolean mit true übergeben. In diesem Fall wird "besterScore", mithilfe
+    der "function min()", auf den eben im Vergleich kleineren Wert gesetzt. Schlussendlich wird der kleinste "besterScore" mit einem
+    return Statement zurückgegeben. Wenn es keinen Sieger gibt, das Spiel aber
+    schon zu Ende ist, dann wird 0 für Unentschieden zurückgegeben.
+  </p>
+  <img src="screenshots/functionMinimax().PNG" alt="minimax()" />
+  <p>
+    Der Minimax Code ist noch recht überschaubar, da das Tic-Tac-Toe Spiel
+    nicht sehr komplex ist. Daher ist der Computer dazu in der Lage, zügig
+    Simulationen durchzugehen und den besten Spielzug zu finden. Bei einem
+    komplizierteren Spiel wie Schach oder Go, bei dem der Minimax auch gerne
+    zum Einsatz kommt, kann nicht jeder Spielzug durchsimuliert werden, da der
+    Computer sonst eine Ewigkeit beschäftigt wäre.
+  </p>
+  <h2 class="doku">Weitere und ausführliche Informationen findet ihr hier:</h2>
+  <p>
+    <a href="https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/">Minimax Algorithm in
+      Game Theory | Set 1 (Introduction)</a><br />
+    <a href="https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-2-evaluation-function/">Minimax
+      Algorithm in Game Theory | Set 2 (Introduction to Evaluation
+      Function)</a><br />
+    <a href="https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-3-tic-tac-toe-ai-finding-optimal-move/">Minimax
+      Algorithm in Game Theory | Set 3 (Tic-Tac-Toe AI – Finding
+      optimal move)</a><br />
+    <a href="https://www.youtube.com/watch?v=l-hh51ncgDI&t=1s">Algorithms Explained – minimax and alpha-beta
+      pruning</a><br />
+    <a href="https://de.wikipedia.org/wiki/Minimax-Algorithmus">Wikipedia</a><br />
+  </p>
+</body>
+
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <meta charset="utf-8" />
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Tic Tac Toe</a></li>
+        <li><a href="doku.html">Dokumentation</a></li>
+        <li><a href="tree.html">Minimax</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!--hier noch eine Frage an Herr Hedler: würden die aus dem 1. Semester ebenso wie wir hier programmieren oder arbeiten diese in dem p5-Editor?
+    Dementsprechend würde ich hier die Screenshots einfügen-->
+
+  <h2>Erstellung Tic-Tac-Toe Feld</h2>
+  <h3 class="doku">1. Spielfeld - Erstellung</h3>
+  <p class="dokuText">Zuerst wird das Spielfeld erstellt. Dazu wird ein zweidimensionales Array erstellt (hier
+    "spielfeld"). Die äußere
+    Klammer steht für das gesamte Spielfeld und die inneren drei Klammern stehen für jeweils eine Reihe des Tic-Tac-Toe
+    Feldes. Diese können vorerst mit "X" und "O" ausgefüllt werden, um das richtige Erstellen des Spielfeldes zu
+    überprüfen.</p>
+  <img src="screenshots/spielfeld.png" alt="spielfeld" />
+
+  <h3 class="doku">2. Canvas - Erstellung und Definition</h3>
+  <p class="dokuText">Die Funktion "setup()" dient hier zum Erstellen des Spielfeldes mit dem Element Canvas. Das Wort
+    Canvas bedeutet
+    auf deutsch "Leinwand" und dient in Javascript zum Malen dynamischer Bitmap-Grafiken. Das Element ist in allen
+    anständigen Browsern heutzutage implementiert und Teil des HTML5-Standards. Mehr dazu könnt Ihr hier: <a
+      href="https://www.peterkroener.de/eine-kleine-canvas-einfuehrung/">https://www.peterkroener.de/eine-kleine-canvas-einfuehrung/</a>
+    oder hier: <a
+      href="https://www.mediaevent.de/javascript/canvas.html">https://www.mediaevent.de/javascript/canvas.html</a>
+    lesen. Die Breite und Höhe des Canvas werden jeweils in einer Variable gespeichert (hier "w" und "h" genannt) und
+    durch 3 geteilt. Warum durch 3? Da das Tic-Tac-Toe Spiel ein 3x3 Feld besitzt und wir somit die Aufteilung für die
+    Zeichen "X" und "O" richtig setzen. Die Variablen (w und h) werden außerhalb aller Funktionen, unterhalb der
+    "spielfeld"-Variable initialisiert. Definiert werden sie, wie oben beschrieben, in der Funktion "setup()"</p>
+  <img src="screenshots/setup_w_h.png" alt="setup_w_h" />
+
+  <h3 class="doku">3. Sp class="dokuText"ielfeldgitter - Tic-Tac-Toe Feld</h3>
+  <p class="dokuText">Der nächste Schritt ist die weitere Implementierung in der Funktion "draw()". Hier wird der
+    Hintergrund
+    "background()" mit "255" befüllt, damit es in dem p5-Editor weiß ist. </br> Als nächstes wollen wir das Gitter
+    erstellen. Dazu benutzen wir die Funktion "line()", die eine Funktion von p5 ist, mit der man Linien zeichnen kann.
+    Insgesamt können 6 Parameter übergeben werden, die ersten drei sind x-, y-, und z-Koordinate des ersten Punktes und
+    die letzten drei sind x-, y-, und z-Koordinate des zweiten Punktes. Für dieses Gitter brauchen wir nur die x-, und
+    y-Koordinaten, deshalb geben wir 4 Parameter weiter. Die Erklärung mit Beispielen gibt es ebenso hier: (<a
+      href="https://www.geeksforgeeks.org/p5-js-line-function/">https://www.geeksforgeeks.org/p5-js-line-function/</a>).
+    Für die Parameter brauchen wir die Variablen "w" und "h", damit das Gitter richtig gesetzt werden kann. Zuerst
+    werden die vertikalen Linien erstellt, dass sieht wie folgt aus: wir starten nach dem ersten Spielfeldgitter, also
+    bei w (= Canvasbreite / 3) für beide x-Koordinaten, da wir bei den vertikalen Linien sind. Die erste y-Koordinate
+    muss 0 sein, da die Linie ganz oben im Spielfeld beginnen soll und die zweite y-Koordinate muss die gesamte Länge
+    height (= Canvashöhe) sein. Die zweite Linie beginnt nach dem zweiten Gitterpunkt und geht ebeneso die gesamte
+    Canvashöhe entlang. Nun zu den horizontalen Linien. Hier ist es genau umgekehrt, das heißt wir beginnen bei der
+    x-Koordinate bei 0 und gehen bei der zweiten Koordinate die gesamte width (= Canvasbreite) entlang. Beide
+    y-Koordinaten sind hier h (= Canvashöhe / 3). Die letzte Linie sollte jetzt alleine machbar sein.</p>
+  <img src="screenshots/spielfeldgitter.png" alt="spielfeldgitter">
+
+  <h3 class="doku">4. Spielfeldgitter - Tic-Tac-Toe mit "X" und "O" befüllen</h3>
+  <p class="dokuText">Wir haben zwar schon festgelegt welcher Spieler welches Zeichen hat, jedoch noch nicht
+    programmiert dass diese
+    angezeigt werden. Dies geschieht wieder mit der Funktion "line()". Dazu gehen wir nochmal in die Funktion "draw()"
+    und erweitern diese. Das Spielfeld muss hierfür noch programmiertechnisch(?)/systematisch(?) dargestellt werden, um
+    die Daten des Spiels verarbeiten zu können. Dafür werden zwei for-Schleifen ineinander verschachtelt, damit das
+    Spielfeld richtig dargestellt werden kann. Da das Spielfeld ein 3x3 Feld ist, gehen beide Variablen der for-Schleife
+    bis drei. Als erstes wird eine Variable "position" erstellt und mit dem ersten Feld des Spielfeldes initialisiert.
+    In der Inneren Schleife werden erst einmal die Positionen in x- und y-Richtung bestimmt. Hierbei
+    deklarieren wirzwei Variablen "x" und "y", die wie folgt befüllt werden. Die x-Achse ist die Breite eines Spielfeld
+    Quadrates mal die Variable der Inneren Schleife, die y-Achse ist die Höhe eines Quadrates mal der Variablen der
+    Äußeren Schleife. Warum werden in den Variablen einmal "i" und einmal "j" aus der Schleife verwendet? Weil wir das
+    Tic-Tac-Toe Feld Reihe für Reihe durchgehen werden. (Dies kann ebenso andersrum richtig gelöst werden?). Noch dazu
+    wurde hier die Textgröße mit "textSize()" auf 32 gesetzt. Als nächstes wird eine Bedingung gestellt, um
+    herauszufinden welcher Spieler gerade an
+    der Reihe ist und sein Zeichen gesetzt hat. Für das Füllen der Felder brauchen wir nacheinander das zu befüllende
+    Feld. Daraus folgt in der Bedingung die Abfrage, ob die Person gerade an der Position ist. Wenn ja, dann wird eine
+    Ellipse erstellt (oder das
+    "X" je nachdem wie es gewollt ist). Zuerst aber kommt die Funktion "noFill()", damit sie nicht mit einer Farbe
+    befüllt ist. Der Ellipse werden Parameter der x- und y-Koordinate zur Positionsbestimmung, sowie der Breite zur
+    Größenbestimmung hinzugefügt. Mehr dazu hier: <a
+      href="https://p5js.org/reference/#/p5/ellipse">https://p5js.org/reference/#/p5/ellipse</a>. Die ersten beiden
+    Parameter der Ellipse sind Koordinaten "x" und "y", die noch außerhalb der Bedingung deklariert und initialisiert
+    werden müssen, weil wir sie ebenso in der anderen Bedingung brauchen. Als dritter Parameter wird hier die Hälfte der
+    Breite des Feldes "w" verwendet, damit der Kreis inmitten des Feldes ist. In der zweiten Bedingung wird geprüft, ob
+    der Computer an der Position ist. Wenn ja, wird in dem Beispiel das Feld mit dem Kreuz befüllt. Für das Darstellen
+    des "X" wird wieder "line()" benutzt. (Hier kann bestimmt auch einfach das String "X" benutzt werden?). Für die
+    erste Diagonale befüllen wir "line()" wie folgt: x-Achse: "x - r", "y - r", "x + r", "y + r" (x und y kann auch erst
+    Plus "r" gemacht werden, d.h. die ersten beiden Parameter können mit den letzten beiden Parametern vertauscht werden
+    ohne dass sich das Ergebnis ändert). Die zweite Diagonale sieht wie folgt aus: "x + r", "y - r", "x - r", "y + r"
+    (auch hier kann Plus wieder mit Minus vertauscht werden ohne dass sich das Ergebis ändert). Testet das gerne im
+    P5-Editor, falls ihr nicht darin arbeitet, um die Erstellung des "X" besser zu verstehen. Wenn in der Funktion
+    "line()" nur "x" und "y" stehen würde, hätten wir einen Punkt inmitten des Spielfeld Quadrates. Wenn "x + r" als
+    Parameter übergeben wird, dann wird eine Linie in x-Richtung nach rechts mit der Länge "r" gezeichnet. Wenn "x - r"
+    als Parameter übergeben wird, dann wird eine Linie in x-Richtung nach links mit der Länge "r" gezeichnet. Wenn "y +
+    r" als Parameter übergeben wird, dann wird die Linie in y-Richtung nach unten um die Länge "r" verschoben. Wenn "y -
+    r" als Parameter übergeben wird, dann wird die Linie in y-Richtung nach oben um die Länge "r" verschoben.
+  </p>
+  <img src="screenshots/spielfeldgitterAnzeige.png" alt="spielfeldgitterAnzeige">
+
+  <h3 class="doku">5. Spielimplementierung Mensch gegen Computer - ohne Algorithmus</h3>
+  <h4>5.1 Funktion mousePressed()</h4>
+  <p class="dokuText">Nun können die Zeichen, "X" und "O", aus dem "spielfeld" entfernt werden, sodass nur leere Strings
+    in dem Array
+    sind. Als nächstes Schreiben wir eine Funktion "mousePressed()", in der wir einen Mausklick einer Person
+    verarbeiten, dessen Zeichen in das ausgewählte Feld geschrieben wird. Danach lassen wir den Computer ein Feld mit
+    seinem Zeichen füllen. Zuerst wird mit einer Bedingung überprüft, ob der aktuelle Spieler die Person ist. Wenn das
+    der Fall ist macht der Spieler seinen Zug. Dazu werden zwei Variablen, hier: "i" und "j", deklariert und
+    initialisiert, um den Mausklick der Person zuzuordnen. Dazu verwenden wir die Funktion "floor()", die den nächsten
+    integer-Wert kalkuliert, der kleiner oder gleich des Parameterwertes entspricht. Mehr dazu hier: <a
+      href="https://p5js.org/reference/#/p5/floor">https://p5js.org/reference/#/p5/floor</a>. Als nächstes brauchen wir
+    noch "mouseX", dass immer die aktuelle vertikale Position der Computermaus enthält, und "mouseY", dass immer die
+    aktuelle horizontale Position der Computermaus enthält. Wenn die linke Maustaste geklickt wird, speichert "mouseX"
+    den x-Wert und "mouseY" den y-Wert der geklickten Position. Mehr dazu hier: <a
+      href="https://p5js.org/reference/#/p5/mouseX">https://p5js.org/reference/#/p5/mouseX</a> und hier: <a
+      href="https://p5js.org/reference/#/p5/mouseY">https://p5js.org/reference/#/p5/mouseY</a>. Der Zug des Spielers
+    wird dann folgend gebildet: let i = floor(mouseX / w). Das selbe wird nun Variable "j" durchgeführt, nur dass es mit
+    den y-Daten ausgefüllt wird. Als nächstes muss überprüft werden, ob die Position im Spielfeld leer ist. Dafür
+    schreiben wir eine Bedingung in der abgefragt wird ob das "spielfeld" an der geklickten Stelle ("i", "j") leer ist.
+    Wenn dies zutrifft, dann wird das Zeichen der person an die Stelle geschrieben. Danach wird der "aktuelleSpieler"
+    auf den Computer gestellt und dieser ist an der Reihe. Dafür schreiben wir eine neue Variable "available" die
+    ersteinmal ein leeres Array ist. Darin füllen wir alle noch freien Plätze des Spielfeldes und suchen daraus per
+    Zufalll einen Platz aus und setzen das Zeichen des Computers hinein. Das passiert wie folgt: es werden zwei
+    Schleifen geschrieben, die jeweils bis drei gehen, da das Spielfeld ein 3x3 Feld ist und wir alle leeren Plätze in
+    die Variable schreiben wollen. Als nächstes gibt es eine Bedingung, die erneut abfrägt ob das Feld an der Stelle "k"
+    und "l" frei ist. Wenn ja wird der Wert in das Array gespeichert. Das erfolgt mit der Funktion "push()". Da zwei
+    Werte hinzugefügt werden müssen, werden diese in der Klammer in eine geschweifte Klammer mit einem Komma getrennt
+    reingeschrieben. Nun gehen wir aus der Bedingung und den zwei Schleifen raus und schreiben eine Variable "spielzug",
+    in der eine zufällige Stelle aus dem erstellten Array gewählt wird. Das geschieht mit der Funktion "random()", in
+    der das Array "available" geschrieben wird. Als nächstes muss das Zeichen des Computers gesetzt werden. Dazu
+    brauchen wir ersteinmal eine Bedingung, die abfrägt ob "spielzug" nicht gleich "null" ist. Ist das der Fall,
+    brauchen
+    wir erneut das "spielfeld" an deren erste Stelle "spielzug.k" steht und an zweiter Stelle "spielzug.l". Warum
+    "spielzug.k" und spielzug.l"? In "spielzug" ist in jeder Position zwei Werte für die x- und y-Achse hinterlegt.
+    "spielzug.k" steht demnach für die x-Achse und "spielzug.l" für die y-Achse eines leeren Spielfeldplatzes. Danach
+    wird der "aktuellerSpieler" wieder auf "person" gesetzt und es wird so lange durchgeführt bis keine Felder im
+    Spielfeld mehr frei sind. Das erste Bild ist das Spielfeld vor dem Klicken. </p>
+  <img src="screenshots/funktionMousePressed()_vorKlicken.png" alt="screenshots/funktionMousePressed()_vorKlicken.pn" />
+  <p class="dokuText">Das zweite Bild ist das Spielfeld nach dem Klicken. </p>
+  <img src="screenshots/funktionMousePressed()_nachKlicken.png"
+    alt="screenshots/funktionMousePressed()_nachKlicken.png" />
+
+  <h4>5.2 Funktion draw() erweitern, um das Spiel auszuwerten</h4>
+  <p class="dokuText">Wenn ihr das Spiel nun ausprobiert, stellt ihr fest, dass noch eine Auswertung des Ergebnisses
+    fehlt und wenn alle
+    Felder voll sind eine Fehlermeldung erscheint. Das passiert, da wir noch keine Auswertung definiert haben und das
+    Spiel beendet haben, wenn alle Felder gefüllt sind. Die Erweiterung ist wie folgt. Zuerst deklarieren wir eine neue
+    Variable result, in der eine Funktion "findeGewinner()" aufgerufen wird. In der Variable steht nun also das Ergebis
+    des Spiels. Die genannte Funktion wird im nächsten Schritt erstellt. Nun muss eine Bedingung definiert werden, die
+    nur ausgeführt wird wenn das Ergebnis nicht gleich null ist. Ist das so, wird ersteinmal die Funktion "noLoop()"
+    aufgerufen, mit der das Spiel gestoppt wird. Danach wird eine neue Variable deklariert, die mit der Funktion
+    "createP()" initialisiert wird. Diese Funktion wird erstmal mit einem leeren String befüllt, je nach Spielergebis
+    wird der Text geändert. Die Funktion "createP()" erstellt einen Paragraphen in der HTML mit einem gewünschten Text.
+    Mehr hier: <a href="https://p5js.org/reference/#/p5/createP">https://p5js.org/reference/#/p5/createP</a>. Als
+    nächstes kann noch ein style festgelegt werden, hier mit der Schriftgröße 32. Nun wird erst eine Bedingung erstellt,
+    die abfrägt ob das Ergebnis ("result") gleich unentschieden ist. Wenn ja wird in "resultP" Unentschieden
+    geschrieben. Wenn nicht wird in "resultP" geschrieben, wer gewonnen hat. Die Schreibweise dazu ist so:
+    resultP.html('${result} hat gewonnen').</p>
+  <img src="screenshots/funktionDraw()_erweiterungResult.png" alt="screenshots/funktionDraw()_erweiterungResult.png">
+
+  <h4>5.3 Funktion dreiGleiche()</h4>
+  <p class="dokuText">Die Funktion dreiGleiche() wird in der Funktion findeGewinner() benötigt und prüft, ob die
+    übergebenen Parameter
+    gleich sind. Dafür muss in der Klammer der Funktion, wie im Beispiel, die Parameter a, b, c übergeben werden. In der
+    Funktion wird gleich ein return geschrieben mit einer Bedingung dahinter. Wenn die Bedingung zutrifft wird "true"
+    zurückgegeben, ansonsten wird "false" zurückgegeben. In der Bedingung wird verglichen, ob die Parameter "a" und "b"
+    gleich sind. Dann wird verglichen ob "b" und "c" gleich sind und zum Schluss wird noch geprüft, dass "a" nicht leer
+    ist.</p>
+  <img src="screenshots/funktionDreiGleiche().png" alt="screenshots/funktionDreiGleiche().png">
+
+  <h4>5.4 Funktion findeGewinner()</h4>
+  <p class="dokuText">In dieser Funktion wird geprüft wer gewonnen hat, damit wir, wie in der Funktion "draw()"
+    beschrieben, den Gewinner
+    ausgeben können. Erst einmal schreiben wir eine neue Variable, die hier "gewinner" heißt und mit "null"
+    initialisiert wird. Danach überprüfen wir die einzelnen Reihen, also horizontal, vertikal und diagonal. Wenn dort
+    die Bedinung zutrifft wird das Zeichen des Gewinners in die Variable geschrieben und am Ende der Funktion
+    zurückgegeben. Wie prüfen wir die einzelnen Reihen? Das geht ganz einfach. Erst einmal schreiben wir eine
+    Schleife,die für den horizontalen und vertikalen Check gleich ist. Danach schreiben wir in die
+    Schleife eine Bedingung, die prüfen soll, ob das Zeichen in der ersten Reihe am ersten Platz auch am zweiten und
+    dritten Platz dasselbe ist. Dieselbe Prüfung gilt auch für die zweite und dritte Reihe, weswegen die Schleife
+    benötigt wird. In der Bedingung wird die Funktion "dreiGleiche()" aufgerufen. Als Parameter werden die Koordinaten
+    von dem jeweiligen Platz übergeben. Dafür benötigen wir die Variable "spielfeld", in der die leeren oder gefüllten
+    Felder der x- und y-Koordinaten des Spielfelds gespeichert sind. Für den horizontalen Check übergeben wir als
+    Parameter spielfeld[i][0], spielfeld[i][1], spielfeld[i][2]. Wenn die Bedingung zutrifft, wird in die Variable
+    "gewinner" das Zeichen im spielfeld[i][0] gesetzt. </br> Für den vertikalen Check ist der Aufbau gleich wie beim
+    horizontalen Check. Die Parameter müssen hier spielfeld[0][i], spielfeld[1][i], spielfeld[2][i] sein und der
+    Gewinner muss auf spielfeld[0][i] gesetzt werden. </br> Die diagonalen Checks brauchen keine Schleife um die
+    Bedinung, da nur zwei diagonale Siege möglich sind. Einmal von links oben nach rechts unten und von links unten nach
+    rechts oben. Zuerst der diagonale Check von links oben nach rechts unten. Hierbei müssen als Parameter
+    spielfeld[0][0], spielfeld[1][1], spielfeld[2][2] übergeben werden und der Gewinner wird auf spielfeld[0][0]
+    gesetzt. </br> Der letzte Vergleich ist der diagonale Check von unten links nach oben rechts. Hierbei müssen die
+    Parameter spielfeld[2][0], spielfeld[1][1], spielfeld[0][2] übergeben werden und der Gewinner wird auf
+    spielfeld[2][0] gesetzt. </br> Als nächstes brauchen wir eine Variable "openSpots" die mit "0" initialisiert wird.
+    In diese Variable schreiben wir nun alle freien Felder des Spielfeldes rein. Dazu brauchen wir zwei ineinander
+    geschriebene Schleifen, um alle Felder abzudecken. Bei beiden Schleifen gehen die Variablen bis "3", da unser
+    Spielfeld ein 3x3 Feld ist. In die Schleife wird eine Bedinungung geschrieben die überprüft, ob "spielfeld[i][j]"
+    gleich leer ist. Ist das der Fall dann wird die Zahl der Variable "openSpots" um eins erhöht. </br> Letzens muss am
+    Schluss der Funktion der Gewinner, falls es überhaupt einen gibt,
+    zurückgegeben werden. Dazu muss eine Bedinung definiert werden die überprüft, ob die Variable "gewinner" gleich
+    "null" ist und ob die Variable "openSpots" gleich "0" ist. Denn nur wenn es keinen Gewinner und auch keine freien
+    Felder mehr in dem Spielfeld gibt, ist das Spielergebnis ein Unentschieden. Trifft die Bedingung zu, wird als String
+    "tie" zurückgegeben. Trifft die Bedingung nicht zu, wird die Variable "gewinner" zurückgegeben.</p>
+  <img src="screenshots/funktionFindeGewinner().png" alt="screenshots/funktionFindeGewinner().png">
+
+  <h3 class="doku">Glückwunsch! Ihr könnt nun euer erstes eigenes Spiel entwickeln. Viel Spaß beim Programmieren. </br>
+    Für eine
+    größere Herausforderung könnt ihr euren Code nun um den Minimax-Algorithmus erweitern. Frohes Gelingen!</h3>
+</body>
+
+</html>
